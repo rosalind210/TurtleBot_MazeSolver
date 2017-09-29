@@ -9,9 +9,14 @@
 #
 
 import rospy
+<<<<<<< HEAD
 from sensor_msgs.msg import LaserScan
 from Tkinter import *
 from geometry_msgs.msg import Twist
+=======
+from stdr_msgs.msg import LaserScannerMsg
+from Tkinter import *
+>>>>>>> 77e0c72a0b6dcee878c70446fdfe16e768a8eff4
 
 class Solver():
 	
