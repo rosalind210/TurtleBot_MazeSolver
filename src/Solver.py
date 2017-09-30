@@ -66,7 +66,6 @@ class Solver():
 		}
 
 	def read_sensors_callback(self, msgs):
-		ranges[] = LaserScannerMsg.getRanges()
 		#read / return information
 		
 
