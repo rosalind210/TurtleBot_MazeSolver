@@ -32,7 +32,7 @@ class Solver():
 		cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 		# init subscriber and left forward right lists
 		self.left = []
-		self.forward = []
+		self.front = []
 		self.right = []
 		laser_scan_sub = rospy.Subscriber('/scan', LaserScan, self.read_sensors_callback)
 
@@ -77,17 +77,15 @@ class Solver():
 		print("Angle Increment is " + str(msg.angle_increment))
 		print(str(len(msg.ranges) * msg.angle_increment))
 		self.left = msg.ranges[360]
-		self.forward = msg.ranges[360]
+		self.front = msg.ranges[360]
 		self.right = msg.ranges[360]
 		rospy.spin()
 
 	# should take in callback info and interpret it into forward, turn, out
 	def read_scanners(ranges):
-		left = ranges[255:285]
-		right = ranges[75:105]
-		front = zip(ranges[345:360],ranges[0:15])
-		return [min(left),min(right),min(front)]
-
+		self.left = min(ranges[255:285])
+		self.right = min(ranges[75:105])
+		self.front = min(zip(ranges[345:360],ranges[0:15]))
 
 
 def main():
