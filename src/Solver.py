@@ -66,12 +66,17 @@ class Solver():
 		}
 
 	def read_sensors_callback(self, msgs):
+		ranges[] = LaserScannerMsg.getRanges()
 		#read / return information
 		
 
 	# should take in callback info and interpret it into forward, turn, out
-	def read_scanners():
-		# put reading scanners here?
+	def read_scanners(ranges):
+		left = ranges[255:285]
+		right = ranges[75:105]
+		front = zip(ranges[345:360],ranges[0:15])
+
+
 
 
 def main():
