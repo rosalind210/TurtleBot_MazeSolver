@@ -44,7 +44,7 @@ class Solver():
 		left = ranges[255:285]
 		right = ranges[75:105]
 		front = zip(ranges[345:360],ranges[0:15])
-
+		return [min(left),min(right),min(front)]
 
 
 	def start():
