@@ -16,6 +16,7 @@ from Tkinter import *
 class Solver():
 	
 	def __init__(self, sensor_topic):
+		rospy.init_node('maze_solver')
 		self.sensor_topic_name = sensor_topic
 		move_forward_twist = Twist() # initialize move forward, will follow left wall
 		turn_twist = Twist() # initialize turning, will turn when wall right in front
@@ -23,7 +24,13 @@ class Solver():
 		turn_twist.angular.z = 0.5
 		## init publisher
 		cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
-	
+		# init subscriber and left forward right lists
+		self.left = []
+		self.forward = []
+		self.right = []
+		laser_scan_sub = rospy.Subscriber('/scan', LaserScan, self.read_sensors_callback)
+		
+
 	def __move__(direction):
 		# put move info here
 		if (direction == "FORWARD") {
@@ -34,9 +41,15 @@ class Solver():
 			cmd_vel_pub(0) # stop moving
 		}
 		
-	def read_sensors_callback(self, msgs):
+	def read_sensors_callback(self, msg):
 		#read / return information
-		
+		print("Range array has " + str(len(msg.ranges)) + " elements.")
+		print("Angle Increment is " + str(msg.angle_increment))
+		print(str(len(msg.ranges) * msg.angle_increment))
+		self.left = msg.ranges[360]
+		self.forward = msg.ranges[360]
+		self.right = msg.ranges[360]
+		rospy.spin()
 
 	# should take in callback info and interpret it into forward, turn, out
 	def read_scanners():
@@ -50,5 +63,7 @@ class Solver():
 def main():
 	rospy.get_node('solver')
 	maze_solver = Solver("/scan")
-	maze_solver.start()
+
+	while not rospy.is_shutdown():
+		
 		
