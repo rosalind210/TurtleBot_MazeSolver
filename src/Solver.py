@@ -39,11 +39,11 @@ class Solver():
 		# check if we should move forward
 		bool forward = __check_move__(in_front)
 		# check if robot needs to adjust 
-		if (forward && (left < min_left || left > max_left)) {
+		if (forward and (left < min_left or left > max_left)) {
 			__adjust__(left)
 		} else if (forward) { # move forward 
 			cmd_vel_pub(self.move_forward)
-		} else if (!forward) { # have to turn
+		} else if (not forward) { # have to turn
 			cmd_vel_pub(self.turn_twist)
 		}
 		
