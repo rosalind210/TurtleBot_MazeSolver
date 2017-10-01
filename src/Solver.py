@@ -9,8 +9,8 @@
 #
 
 import rospy
-#from stdr_msgs.msg import LaserSensorMsg
-from sensor_msgs.msg import LaserScan #for real turtlebot
+from stdr_msgs.msg import LaserSensorMsg
+#from sensor_msgs.msg import LaserScan #for real turtlebot
 from Tkinter import *
 
 class Solver():
