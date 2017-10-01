@@ -75,16 +75,17 @@ class Solver():
 		print("Range array has " + str(len(msg.ranges)) + " elements.")
 		print("Angle Increment is " + str(msg.angle_increment))
 		print(str(len(msg.ranges) * msg.angle_increment))
-		self.left = msg.ranges[360]
-		self.front = msg.ranges[360]
-		self.right = msg.ranges[360]
-		rospy.spin()
+		# start movement by calling scanners to interpret information
+		read_scanners()
+		
 
 	# should take in callback info and interpret it into forward, turn, out
-	def read_scanners(ranges):
+	def read_scanners():
 		self.left = min(msg.ranges[255:285])
 		self.right = min(msg.ranges[75:105])
 		self.front = min(zip(msg.ranges[345:360], msg.ranges[0:15]))
+		# move given info
+		move([left, right, front])
 
 	def start():
 		root = Tk()
