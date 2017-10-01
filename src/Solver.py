@@ -41,7 +41,7 @@ class Solver():
 		# set up distances
 		left = direction[0]
 		right = direction[1]
-		int_front = direction[2]
+		in_front = direction[2]
 		# check if we should move forward
 		bool forward = __check_move__(in_front)
 		# check if robot needs to adjust 
