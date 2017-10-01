@@ -9,8 +9,8 @@
 #
 
 import rospy
-from stdr_msgs.msg import LaserSensorMsg
-#from sensor_msgs.msg import LaserScan #for real turtlebot
+#from stdr_msgs.msg import LaserSensorMsg
+from sensor_msgs.msg import LaserScan #for real turtlebot
 from Tkinter import *
 
 class Solver():
@@ -34,7 +34,6 @@ class Solver():
 		self.left = []
 		self.front = []
 		self.right = []
-		laser_scan_sub = rospy.Subscriber('/scan', LaserScan, self.read_sensors_callback)
 
 	# Publishes move forward or turn
 	def move(direction):
@@ -83,15 +82,24 @@ class Solver():
 
 	# should take in callback info and interpret it into forward, turn, out
 	def read_scanners(ranges):
-		self.left = min(ranges[255:285])
-		self.right = min(ranges[75:105])
-		self.front = min(zip(ranges[345:360],ranges[0:15]))
+		self.left = min(msg.ranges[255:285])
+		self.right = min(msg.ranges[75:105])
+		self.front = min(zip(msg.ranges[345:360], msg.ranges[0:15]))
+
+	def start():
+		root = Tk()
+		rospy.Subscriber('/scan', LaserScan, self.read_sensors_callback)
+		root.mainloop()
+		
 
 
 def main():
-	rospy.get_node('solver')
+	rospy.init_node('solver')
 	maze_solver = Solver("/scan")
+	maze_solver.start()
 
-	while not rospy.is_shutdown():
+
+def __name__ == '__main__':
+	main()
 		
 		
