@@ -12,6 +12,7 @@ import rospy
 from stdr_msgs.msg import LaserSensorMsg
 #from sensor_msgs.msg import LaserScan #for real turtlebot
 from Tkinter import *
+from geometry_msgs.msg import Twist
 
 class Solver():
 
