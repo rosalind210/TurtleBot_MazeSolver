@@ -90,14 +90,14 @@ class Solver():
 
 	def start():
 		root = Tk()
-		rospy.Subscriber('/scan', LaserScan, self.read_sensors_callback)
+		rospy.Subscriber(self.sensor_topic_name, LaserScan, self.read_sensors_callback)
 		root.mainloop()
 		
 
 
 def main():
 	rospy.init_node('solver')
-	maze_solver = Solver("/scan")
+	maze_solver = Solver("/robot0/laser_0")
 	maze_solver.start()
 
 
