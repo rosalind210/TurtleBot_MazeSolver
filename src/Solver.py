@@ -43,15 +43,14 @@ class Solver():
 		right = direction[1]
 		in_front = direction[2]
 		# check if we should move forward
-		bool forward = __check_move__(in_front)
+		forward = __check_move__(in_front)
 		# check if robot needs to adjust 
-		if (forward and (left < min_left or left > max_left)) {
+		if (forward and (left < min_left or left > max_left)):
 			__adjust__(left)
-		} else if (forward) { # move forward 
+		elif (forward): # move forward 
 			cmd_vel_pub(self.move_forward)
-		} else if (not forward) { # have to turn
+		elif (not forward): # have to turn
 			cmd_vel_pub(self.turn_twist)
-		}
 
 	# adjust to follow left wall
 	def __adjust__(distance):
@@ -63,13 +62,12 @@ class Solver():
 		cmd_vel_pub(go_left)
 
 	# check if there is a wall in front
-	def __check_move__(front) :
+	def __check_move__(front):
 		# check front
-		if (front < min_front) {
+		if (front < min_front):
 			return false
-		} else {
+		else:
 			return true
-		}
 
 	def read_sensors_callback(self, msgs):
 		#read / return information
@@ -77,7 +75,7 @@ class Solver():
 		print("Angle Increment is " + str(msg.angle_increment))
 		print(str(len(msg.ranges) * msg.angle_increment))
 		# start movement by calling scanners to interpret information
-		read_scanners()
+		#read_scanners()
 		
 
 	# should take in callback info and interpret it into forward, turn, out
@@ -101,7 +99,7 @@ def main():
 	maze_solver.start()
 
 
-def __name__ == '__main__':
+if __name__ == '__main__':
 	main()
 		
 		
