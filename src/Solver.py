@@ -86,7 +86,7 @@ class Solver():
 		# move given info
 		move([left, right, front])
 
-	def start():
+	def start(self):
 		root = Tk()
 		rospy.Subscriber(self.sensor_topic_name, LaserScan, self.read_sensors_callback)
 		root.mainloop()
