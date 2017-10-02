@@ -23,7 +23,7 @@ class Solver():
 	min_front = .07
 	
 	def __init__(self, sensor_topic):
-		rospy.init_node('maze_solver')
+		rospy.init_node('solver')
 		self.sensor_topic_name = sensor_topic
 		move_forward_twist = Twist() # initialize move forward, will follow left wall
 		turn_twist = Twist() # initialize turning, will turn when wall right in front
