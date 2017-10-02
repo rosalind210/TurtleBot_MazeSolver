@@ -69,7 +69,7 @@ class Solver():
 		else:
 			return true
 
-	def read_sensors_callback(self, msgs):
+	def read_sensors_callback(self, msg):
 		#read / return information
 		print("Range array has " + str(len(msg.ranges)) + " elements.")
 		print("Angle Increment is " + str(msg.angle_increment))
