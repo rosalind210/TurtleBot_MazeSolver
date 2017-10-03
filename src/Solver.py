@@ -41,10 +41,10 @@ class Solver():
 		self.right = []
 		
 		# variables to follow wall
-		self.min_left = .05 # in meters
-		self.max_left = .1
+		self.min_left = .3 # in meters
+		self.max_left = 2
 		# variables for checking front
-		self.min_front = .07
+		self.min_front = .5
 
 	# Publishes move forward or turn
 	def move(self, direction):
@@ -62,7 +62,7 @@ class Solver():
 		if (forward and (left < self.min_left or left > self.max_left)):
 			self.__adjust__(left)
 		elif (forward): # move forward 
-			self.cmd_vel_pub.publish(self.move_forward)
+			self.cmd_vel_pub.publish(self.move_forward_twist)
 		elif (not forward): # have to turn
 			self.cmd_vel_pub.publish(self.turn_twist)
 
@@ -70,8 +70,11 @@ class Solver():
 	def __adjust__(self, distance):
 		# establish diagonal movement (only necessary here -- why its not global or init)
 		go_left = Twist()
-		go_left.angular.z = -0.2
-		go_left.linear.x = 0.2
+		if (distance < self.min_left):
+			go_left.angular.z = -0.02
+		else:
+			go_left.angular.z = 0.02
+		go_left.linear.x = 0.02
 		# actually move
 		print("IN ADJUST")
 		print(go_left)
@@ -96,9 +99,9 @@ class Solver():
 
 	# should take in callback info and interpret it into forward, turn, out
 	def read_scanners(self, msg):
-		self.left = min(msg.ranges[255:285])
+		self.left = min(msg.ranges[75:105])
 		print("Min left " + str(self.left))
-		self.right = min(msg.ranges[75:105])
+		self.right = min(msg.ranges[255:285])
 		print("Min right " + str(self.right))
 		self.front = min(msg.ranges[345:360] + msg.ranges[0:15])
 		print("Min front " + str(self.front))
