@@ -7,6 +7,8 @@
 # Algorithm idea:
 #	Follow the left most wall until completion
 #
+#When creating robot on simulator: Add Laser (laser_1), edit to make number of rays, angle span 360
+#orientation 180. Add a sonar as well to see where the robot is facing on simulator
 	
 import rospy
 #from stdr_msgs.msg import LaserSensorMsg
@@ -83,11 +85,11 @@ class Solver():
 		print("Angle Increment is " + str(msg.angle_increment))
 		print(str(len(msg.ranges) * msg.angle_increment))
 		# start movement by calling scanners to interpret information
-		self.read_scanners()
+		self.read_scanners(msg)
 		
 
 	# should take in callback info and interpret it into forward, turn, out
-	def read_scanners():
+	def read_scanners(self, msg):
 		self.left = min(msg.ranges[255:285])
 		print(self.left)
 		self.right = min(msg.ranges[75:105])
