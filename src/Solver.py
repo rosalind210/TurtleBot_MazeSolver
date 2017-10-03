@@ -7,13 +7,21 @@
 # Algorithm idea:
 #	Follow the left most wall until completion
 #
-
+	
 import rospy
 #from stdr_msgs.msg import LaserSensorMsg
 from sensor_msgs.msg import LaserScan #for real turtlebot
 from Tkinter import *
 from geometry_msgs.msg import Twist
 
+#CMD: rosrun maze_solver Solver.py tb (or it could be empty for simulator)
+robotid = str(sys.argv[1])
+
+if(robotid=="tb"):
+	print("Turtlebot")
+else:
+	print("Simulation Robot")
+	
 class Solver():
 
 	# variables to follow wall
@@ -93,12 +101,15 @@ class Solver():
 
 def main():
 	rospy.init_node('solver')
-	maze_solver = Solver("/robot0/laser_0")
+	#initialize subscriber to specific topic depending on if it's running on turtlebot or simulator
+	if(robotid == "tb"):
+		maze_solver = Solver("/scan")
+	else:
+		maze_solver = Solver("/robot0/laser_0")
 	maze_solver.start()
 	#TODO - create shutdown method for when maze finishes
 
 
 if __name__ == '__main__':
 	main()
-		
 		
