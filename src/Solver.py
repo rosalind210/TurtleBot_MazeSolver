@@ -29,12 +29,12 @@ class Solver():
 	def __init__(self, sensor_topic):
 		rospy.init_node('solver')
 		self.sensor_topic_name = sensor_topic
-		move_forward_twist = Twist() # initialize move forward, will follow left wall
-		turn_twist = Twist() # initialize turning, will turn when wall right in front
-		move_forward_twist.linear.x = 0.5
-		turn_twist.angular.z = 0.5
+		self.move_forward_twist = Twist() # initialize move forward, will follow left wall
+		self.turn_twist = Twist() # initialize turning, will turn when wall right in front
+		self.move_forward_twist.linear.x = 0.5
+		self.turn_twist.angular.z = 0.5
 		## init publisher
-		self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
+		self.cmd_vel_pub = rospy.Publisher('/robot0/cmd_vel', Twist, queue_size=1)
 		# init subscriber and left forward right lists
 		self.left = []
 		self.front = []
@@ -52,6 +52,10 @@ class Solver():
 		left = direction[0]
 		right = direction[1]
 		in_front = direction[2]
+		print("MOVE")
+		print("left = " + str(left))
+		print("right = " + str(right))
+		print("in_front = " + str(in_front))
 		# check if we should move forward
 		forward = self.__check_move__(in_front)
 		# check if robot needs to adjust 
@@ -69,6 +73,8 @@ class Solver():
 		go_left.angular.z = -0.2
 		go_left.linear.x = 0.2
 		# actually move
+		print("IN ADJUST")
+		print(go_left)
 		self.cmd_vel_pub.publish(go_left)
 
 	# check if there is a wall in front
@@ -81,9 +87,9 @@ class Solver():
 
 	def read_sensors_callback(self, msg):
 		#read / return information
-		print("Range array has " + str(len(msg.ranges)) + " elements.")
-		print("Angle Increment is " + str(msg.angle_increment))
-		print(str(len(msg.ranges) * msg.angle_increment))
+		#print("Range array has " + str(len(msg.ranges)) + " elements.")
+		#print("Angle Increment is " + str(msg.angle_increment))
+		#print(str(len(msg.ranges) * msg.angle_increment))
 		# start movement by calling scanners to interpret information
 		self.read_scanners(msg)
 		
@@ -91,11 +97,11 @@ class Solver():
 	# should take in callback info and interpret it into forward, turn, out
 	def read_scanners(self, msg):
 		self.left = min(msg.ranges[255:285])
-		print(self.left)
+		print("Min left " + str(self.left))
 		self.right = min(msg.ranges[75:105])
-		print(self.right)
-		self.front = min(zip(msg.ranges[345:360], msg.ranges[0:15]))
-		print(self.front)
+		print("Min right " + str(self.right))
+		self.front = min(msg.ranges[345:360] + msg.ranges[0:15])
+		print("Min front " + str(self.front))
 		# move given info
 		self.move([self.left, self.right, self.front])
 
