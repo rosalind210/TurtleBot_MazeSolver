@@ -14,7 +14,7 @@ from sensor_msgs.msg import LaserScan #for real turtlebot
 from Tkinter import *
 from geometry_msgs.msg import Twist
 
-#CMD: rosrun maze_solver Solver.py tb (or it could be empty for simulator)
+#CMD: rosrun maze_solver Solver.py tb (or type any other single argument to use Simulation)
 robotid = str(sys.argv[1])
 
 if(robotid=="tb"):
