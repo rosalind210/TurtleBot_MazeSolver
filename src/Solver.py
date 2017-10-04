@@ -42,7 +42,10 @@ class Solver():
 		
 		# variables to follow wall
 		self.min_left = .3 # in meters
-		self.max_left = 2
+		if (robotid=="tb"):
+			self.max_left = 1
+		else:
+			self.max_left = 2
 		# variables for checking front
 		self.min_front = .5
 
